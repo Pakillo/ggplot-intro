@@ -1,14 +1,14 @@
 ---
 title: "Data visualisation with ggplot2"
 author: "Francisco Rodriguez-Sanchez (@frod_san)"
-date: "November 2016"
+date: "March 2017"
 fontsize: 9pt
 output:
   beamer_presentation: 
     df_print: kable
     fig_caption: no
-    fig_height: 3
-    fig_width: 4
+    fig_height: 2.5
+    fig_width: 3.5
     includes:
       in_header: header.tex
     latex_engine: pdflatex
@@ -27,7 +27,7 @@ library(knitr)
 opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, eval = TRUE, size = 'footnotesize')
 
 ## Code decoration
-opts_chunk$set(tidy = FALSE, comment = NA, highlight = TRUE, prompt = FALSE, crop = TRUE)
+opts_chunk$set(tidy = FALSE, comment = NA, highlight = TRUE, prompt = FALSE)
 
 # ## Cache
 opts_chunk$set(cache = TRUE, cache.path = "knitr_output/cache/")
@@ -38,7 +38,7 @@ opts_chunk$set(fig.align = 'center')
 
 ### Hooks ###
 ## Crop plot margins
-knit_hooks$set(crop = hook_pdfcrop)
+#knit_hooks$set(crop = hook_pdfcrop)
 
 ## Reduce font size
 # see http://stackoverflow.com/a/39961605
@@ -186,18 +186,12 @@ include_graphics("images/so2.png")
 
 # Building a ggplot
 
-## Our example dataset: tree heights and DBH
+## Our example dataset: paper planes flying experiment
 
-http://tinyurl.com/treesdata
-
-- One species
-- 10 plots
-- 1000 trees
-- Number of trees per plot ranging from 4 to 392
-
-```{r echo=TRUE}
-trees <- read.csv("data/trees.csv")
-summary(trees[, 1:3])
+```{r echo=c(1,3)}
+library(paperplanes)
+data(paperplanes)
+head(paperplanes)
 ```
 
 
@@ -218,33 +212,30 @@ http://r4ds.had.co.nz/tidy-data.html
 
 ```{r echo=TRUE, cache=FALSE}
 library(ggplot2)
-ggplot(trees)
+ggplot(paperplanes)
 ```
 
 
 ## What variables as axes?
 
 ```{r echo=TRUE}
-ggplot(trees, aes(x = dbh, y = height))
+ggplot(paperplanes, aes(x = age, y = distance))
 ```
 
 ## Adding layers (geoms)
 
 ```{r echo=TRUE, eval=TRUE}
-ggplot(trees, aes(x = dbh, y = height)) +
+ggplot(paperplanes, aes(x = age, y = distance)) +
   geom_point()
 ```
 
 
-## Adding layers (geoms)
+## Assigning ggplot objects
 
-```{r echo=TRUE, fig.height=3, fig.width=4}
-myplot <- ggplot(trees, aes(x = dbh, y = height)) 
+```{r echo=c(1,2)}
+myplot <- ggplot(paperplanes, aes(x = age, y = distance)) 
 myplot + geom_point()
-myplot
 ```
-
-Check out `geom_point` help [here](http://docs.ggplot2.org/current/geom_point.html)
 
 
 ## Changing point size and type
@@ -253,54 +244,49 @@ Check out `geom_point` help [here](http://docs.ggplot2.org/current/geom_point.ht
 myplot + geom_point(size = 2)
 ```
 
-
-## Changing point size and type
-
-```{r echo=TRUE}
-myplot + geom_point(size = 2, shape = 18)
-```
+Check out `geom_point` help [here](http://docs.ggplot2.org/current/geom_point.html)
 
 
 ## Changing point size and type
 
 ```{r echo=TRUE}
-myplot + geom_point(size = 2, shape = 18, colour = "blue")
+myplot + geom_point(size = 2, shape = 8)
 ```
 
 
-## Map geom aesthetics to variable
+## Changing point size and type
 
 ```{r echo=TRUE}
-myplot + geom_point(aes(colour = sex), size = 2)
+myplot + geom_point(size = 2, shape = 16, colour = "blue")
 ```
 
 
-## Map geom aesthetics to variable
+## Map geom aesthetics (e.g. colour) to variable
 
 ```{r echo=TRUE}
-myplot + geom_point(aes(colour = factor(plot)), size = 2)
+myplot + geom_point(aes(colour = gender))
 ```
 
 
-## Map geom aesthetics to variable
+## Map geom aesthetics (colour, shape) to variable
 
 ```{r echo=TRUE}
-myplot + geom_point(aes(colour = sex, shape = sex), size = 2)
+myplot + geom_point(aes(colour = gender, shape = gender))
 ```
 
 
 ## Change colour scale
 
 ```{r echo=TRUE}
-myplot + geom_point(aes(colour = sex, shape = sex), size = 2) +
-  scale_colour_brewer(type = "qual", palette = 7)
+myplot + geom_point(aes(colour = gender)) +
+  scale_colour_brewer(type = "qual", palette = 6)
 ```
 
 
 ## Change colour scale
 
 ```{r echo=TRUE}
-myplot + geom_point(aes(colour = sex, shape = sex), size = 2) +
+myplot + geom_point(aes(colour = gender)) +
   scale_colour_manual(values = c("pink", "blue"))
 ```
 
@@ -308,21 +294,20 @@ myplot + geom_point(aes(colour = sex, shape = sex), size = 2) +
 
 ## Change axis labels: xlab & ylab
 
-```{r echo=1:4}
-myplot <- myplot + geom_point(aes(colour = sex, shape = sex), size = 2)
+```{r echo=1:2}
+myplot <- myplot + geom_point(aes(colour = gender))
 myplot <- myplot + 
-  xlab("Diameter at Breast Height (cm)") +
-  ylab("Height (m)")
+  labs(x = "Age (years)", y = "Distance (m)")
 myplot
 ```
 
 
 
-## Set title: ggtitle
+## Set title
 
 ```{r echo=1}
 myplot <- myplot + 
-  ggtitle("Tree height and DBH")
+  labs(title = "Distance flown by age")
 myplot
 ```
 
@@ -337,33 +322,50 @@ myplot
 
 ## Adding another layer
 
-```{r echo=TRUE}
-myplot + geom_vline(xintercept = c(10, 20, 30, 40, 50))
+```{r echo=1}
+myplot <- myplot + geom_vline(xintercept = c(20, 40, 60))
+myplot
 ```
 
+
+## Adding another layer
+
+```{r echo=1}
+myplot <- myplot + geom_hline(yintercept = 10)
+myplot
+```
 
 
 ## Exercise: Make a plot like this one
 
 ```{r}
-ggplot(trees, aes(x = factor(plot), y = height)) +
+ggplot(paperplanes, aes(x = gender, y = distance)) +
   geom_boxplot() +
-  xlab("Study plot") + 
-  ylab("Height (m)") + 
-  ggtitle("Tree heights per plot")
+  labs(x = "Gender", y = "Distance (m)", 
+       title = "Distance flown by gender")
 ```
 
 
 ## Exercise: Make a plot like this one
 
 ```{r}
-ggplot(trees, aes(x = factor(plot), y = height)) +
+ggplot(paperplanes, aes(x = gender, y = distance)) +
   geom_violin() +
-  xlab("Study plot") + 
-  ylab("Height (m)") + 
-  ggtitle("Tree heights per plot") +
-  geom_point()
+  labs(x = "Gender", y = "Distance (m)", 
+       title = "Distance flown by gender")
 ```
+
+
+## Exercise: Make a plot like this one
+
+```{r}
+ggplot(paperplanes, aes(x = gender, y = distance)) +
+  geom_violin(fill = "orange") +
+  geom_point() +
+  labs(x = "Gender", y = "Distance (m)", 
+       title = "Distance flown by gender")
+```
+
 
 
 # Themes: changing plot appearance
@@ -372,7 +374,7 @@ ggplot(trees, aes(x = factor(plot), y = height)) +
 ## myplot
 
 ```{r echo=1}
-myplot <- ggplot(trees, aes(x = dbh, y = height)) + 
+myplot <- ggplot(paperplanes, aes(x = age, y = distance)) + 
   geom_point()
 myplot
 ```
@@ -420,11 +422,10 @@ myplot + theme_wsj()
 ## Exercise: make a plot like this one
 
 ```{r}
-ggplot(trees, aes(x = dbh, y = height, colour = sex)) +
+ggplot(paperplanes, aes(x = age, y = distance, colour = gender)) +
   geom_point() + 
-  xlab("DBH (cm)") + 
-  ylab("Height (m)") + 
-  ggtitle("Changing plot appearance") +
+  labs(x = "Age (years)", y = "Distance (m)", 
+       title = "Changing plot appearance") +
   theme(axis.title.x = element_text(colour = "blue"),
         axis.title.y = element_text(colour = "red"),
         plot.title = element_text(size = 18),
@@ -433,14 +434,24 @@ ggplot(trees, aes(x = dbh, y = height, colour = sex)) +
 ```
 
 
-
-## ggplot theme assistant (Rstudio addin)
+## Easily changing appearance with ggthemeassist (Rstudio addin)
 
 https://github.com/calligross/ggthemeassist
 
 ```{r}
 myplot
 ```
+
+
+## Easily changing appearance with ggedit
+
+https://github.com/metrumresearchgroup/ggedit
+
+```{r}
+myplot
+```
+
+
 
 
 ## Think twice before editing plots out of R
@@ -470,19 +481,19 @@ https://gist.github.com/Pakillo/c2c7ea11c528cc2ee20f#themes
 
 ## Composite figures
 
-```{r echo=TRUE}
+```{r echo=TRUE, out.width='4in', out.height='3in'}
 library(cowplot)
-plot1 <- ggplot(trees, aes(dbh, height)) + geom_point()
-plot2 <- ggplot(trees, aes(factor(plot), height)) + geom_boxplot()
+plot1 <- ggplot(paperplanes, aes(age, distance)) + geom_point()
+plot2 <- ggplot(paperplanes, aes(gender, distance)) + geom_boxplot()
 plot_grid(plot1, plot2, labels = "AUTO")
 ```
 
 
 ## Composite figures
 
-```{r echo=3}
-plot1 <- ggplot(trees, aes(dbh, height)) + geom_point()
-plot2 <- ggplot(trees, aes(factor(plot), height)) + geom_boxplot()
+```{r echo=3, out.width='3in', out.height='3in'}
+plot1 <- ggplot(paperplanes, aes(age, distance)) + geom_point()
+plot2 <- ggplot(paperplanes, aes(gender, distance)) + geom_boxplot()
 plot_grid(plot1, plot2, labels = "AUTO", ncol = 1)
 ```
 
@@ -496,28 +507,28 @@ ggsave("myplot.pdf")
 
 ## Facetting
 
-```{r echo=TRUE}
-ggplot(trees, aes(dbh, height)) +
+```{r echo=TRUE, out.width='3in', out.height='2.5in'}
+ggplot(paperplanes, aes(age, distance)) +
   geom_point() + theme_minimal(base_size = 8) +
-  facet_wrap(~plot)
+  facet_wrap(~gender)
 ```
 
 
 
 ## Facetting
 
-```{r echo=TRUE}
-ggplot(trees) +
-  geom_histogram(aes(height)) + theme_minimal(base_size = 8) + 
-  facet_wrap(~plot, nrow = 2)
+```{r echo=TRUE, out.width='3in', out.height='2.5in'}
+ggplot(paperplanes) +
+  geom_histogram(aes(distance)) + theme_minimal(base_size = 8) + 
+  facet_wrap(~gender, nrow = 2)
 ```
 
 
-## Interactivity
+## Interactivity: plotly
 
-```{r echo=TRUE}
-suppressPackageStartupMessages(library(plotly))
-myplot <- ggplot(trees, aes(dbh, height)) + geom_point()
+```{r echo=TRUE, eval=FALSE}
+library(plotly)
+myplot <- ggplot(paperplanes, aes(age, distance)) + geom_point()
 ggplotly(myplot)
 ```
 
@@ -540,17 +551,42 @@ ggplotly(myplot)
 - Themes (appearance)
 
 
+
+
+
+## Exercise: make a plot like this one
+
+```{r}
+ggplot(paperplanes, aes(factor(paper), distance)) +
+  geom_violin()
+```
+
+
+
 ## Exercise: make a plot like this one
 
 ```{r fig.height=4, fig.width=5}
-ggplot(trees) +
-  geom_histogram(aes(height, group = sex, colour = sex)) +
+ggplot(paperplanes, aes(age, distance)) +
+  geom_point() +
+  geom_smooth() +
   theme_minimal(base_size = 8) +
-  facet_wrap(~plot) +
-  xlab("Height (m)") +
-  ylab("Number of trees") +
-  ggtitle("Distribution of heights by sex and plot")
+  facet_wrap(~gender, nrow = 2) +
+  labs(x = "Age(years)", y = "Distance (m)", 
+       title = "Distance flown by age and gender")
 ```
+
+
+## Exercise: make a plot like this one
+
+```{r}
+ggplot(paperplanes) +
+  geom_histogram(aes(age)) +
+  facet_wrap(~gender, nrow = 2) + 
+  labs(x = "Age (years)", y = "Number of individuals", 
+       title = "Age distribution per gender") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
 
 
 ## END
