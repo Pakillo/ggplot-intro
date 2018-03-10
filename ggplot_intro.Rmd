@@ -1,7 +1,6 @@
 ---
 title: "Data visualisation with ggplot2"
 author: "Francisco Rodriguez-Sanchez (@frod_san)"
-date: "March 2017"
 fontsize: 9pt
 output:
   beamer_presentation: 
@@ -48,6 +47,23 @@ knit_hooks$set(smallfont = function(before, options, envir) {
   })
 
 ```
+
+
+## Always plot data!
+
+```{r echo=FALSE}
+library(ggplot2)
+library(datasauRus)
+ggplot(subset(datasaurus_dozen, dataset != "x_shape"), aes(x = x, y = y)) +
+  facet_wrap(~dataset, ncol = 4) +
+  geom_point(size = 1) +
+  theme_bw() +
+  theme(legend.position = "none", strip.text = element_blank()) 
+
+```
+
+https://github.com/stephlocke/datasauRus
+
 
 
 ## Made with ggplot
@@ -138,6 +154,11 @@ Source: https://github.com/jennybc/ggplot2-tutorial
 - [Data Visualization with R and ggplot2](https://github.com/pablobarbera/Rdataviz)  
 - [ggplot2 tutorial](https://github.com/jennybc/ggplot2-tutorial)  
 - [Data visualisation chapter in R for Data Science](http://r4ds.had.co.nz/data-visualisation.html)
+- [The complete ggplot2 tutorial](http://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html)
+- [Data visualization: a practical introduction (K. Healy)](http://socviz.co/)
+- [Fundamentals of data visualization](http://serialmentor.com/dataviz/)
+
+
 
 
 ## Cheatsheet
@@ -146,7 +167,8 @@ Source: https://github.com/jennybc/ggplot2-tutorial
 include_graphics("images/cheatsheet.png")
 ```
 
-https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf
+https://www.rstudio.com/resources/cheatsheets/
+
 
 
 ## Repos of figures + code
@@ -275,6 +297,15 @@ myplot + geom_point(aes(colour = gender, shape = gender))
 ```
 
 
+## Common aesthetics
+
+```{r out.width="4in", out.height="3in"}
+include_graphics("images/aesthetics_Wilke.png")
+```
+
+http://serialmentor.com/dataviz/aesthetic-mapping.html
+
+
 ## Change colour scale
 
 ```{r echo=TRUE}
@@ -367,6 +398,16 @@ ggplot(paperplanes, aes(x = gender, y = distance)) +
 ```
 
 
+## Exercise: Make a plot like this one
+
+```{r}
+ggplot(paperplanes, aes(x = distance)) +
+  geom_density(aes(colour = gender, fill = gender), alpha = 0.5) +
+  labs(x = "Distance (m)", 
+       title = "Distances flown by gender")
+```
+
+
 
 # Themes: changing plot appearance
 
@@ -428,7 +469,7 @@ ggplot(paperplanes, aes(x = age, y = distance, colour = gender)) +
        title = "Changing plot appearance") +
   theme(axis.title.x = element_text(colour = "blue"),
         axis.title.y = element_text(colour = "red"),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 16),
         legend.key = element_rect(fill = "white")
         )
 ```
@@ -462,6 +503,7 @@ include_graphics("images/trevor_tweet.png")
 
 http://mbjoseph.github.io/2015/02/26/plotting.html
 
+serialmentor.com/dataviz/choosing-the-right-visualization-software.html
 
 
 ## Publication-quality plots
@@ -479,7 +521,11 @@ Publication themes:
 https://gist.github.com/Pakillo/c2c7ea11c528cc2ee20f#themes
 
 
-## Composite figures
+
+
+# Composite figures
+
+## Composite figures: cowplot
 
 ```{r echo=TRUE, out.width='4in', out.height='3in'}
 library(cowplot)
@@ -491,11 +537,30 @@ plot_grid(plot1, plot2, labels = "AUTO")
 
 ## Composite figures
 
-```{r echo=3, out.width='3in', out.height='3in'}
+```{r echo=3, out.width='3in', out.height='5in'}
 plot1 <- ggplot(paperplanes, aes(age, distance)) + geom_point()
 plot2 <- ggplot(paperplanes, aes(gender, distance)) + geom_boxplot()
 plot_grid(plot1, plot2, labels = "AUTO", ncol = 1)
 ```
+
+
+## Composite figures: patchwork
+
+```{r}
+include_graphics("images/patchwork.PNG")
+```
+
+https://github.com/thomasp85/patchwork
+
+
+## Composite figures: egg
+
+```{r}
+include_graphics("images/egg.png")
+```
+
+https://cran.r-project.org/web/packages/egg/index.html
+
 
 
 ## Saving plot: ggsave
@@ -505,11 +570,14 @@ ggsave("myplot.pdf")
 ```
 
 
+
+# Facetting
+
 ## Facetting
 
 ```{r echo=TRUE, out.width='3in', out.height='2.5in'}
 ggplot(paperplanes, aes(age, distance)) +
-  geom_point() + theme_minimal(base_size = 8) +
+    geom_point() + theme_bw(base_size = 12) +
   facet_wrap(~gender)
 ```
 
@@ -571,14 +639,26 @@ ggplot(paperplanes, aes(age, distance)) +
   geom_smooth() +
   theme_minimal(base_size = 8) +
   facet_wrap(~gender, nrow = 2) +
-  labs(x = "Age(years)", y = "Distance (m)", 
+  labs(x = "Age (years)", y = "Distance (m)", 
        title = "Distance flown by age and gender")
 ```
 
 
 ## Exercise: make a plot like this one
 
-```{r}
+```{r fig.height=4, fig.width=5}
+ggplot(paperplanes, aes(age, distance)) +
+  geom_point(aes(colour = gender)) +
+  geom_smooth(aes(colour = gender)) +
+  theme_minimal(base_size = 12) +
+  labs(x = "Age (years)", y = "Distance (m)", 
+       title = "Distance flown by age and gender")
+```
+
+
+## Exercise: make a plot like this one
+
+```{r out.height="3.5in"}
 ggplot(paperplanes) +
   geom_histogram(aes(age)) +
   facet_wrap(~gender, nrow = 2) + 
@@ -587,6 +667,23 @@ ggplot(paperplanes) +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
+
+
+```{r include=FALSE}
+library(rotl)
+library(ggtree)
+lauraceae <- tnrs_match_names(c("Quercus suber", "Quercus ilex", "Pinus pinea", "Laurus nobilis"))
+lautree <- tol_induced_subtree(ott_ids = ott_id(lauraceae))
+ggtree(lautree) + geom_tiplab() 
+```
+
+
+
+## Exercise: make a plot like this one
+
+```{r out.width="2in", out.height="3in"}
+include_graphics("images/christmas_tree.png")
+```
 
 
 ## END
