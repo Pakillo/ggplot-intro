@@ -2,7 +2,7 @@
 
 [Francisco Rodríguez-Sánchez](https://bit.ly/frod_san)
 
-See slides (PDF) [here](https://github.com/Pakillo/ggplot-intro/raw/paperplanes/ggplot_intro.pdf)
+Download slides (PDF) [here](https://github.com/Pakillo/ggplot-intro/raw/paperplanes/ggplot_intro.pdf). See slides [here](https://github.com/Pakillo/ggplot-intro/blob/paperplanes/ggplot_intro.pdf)
 
 See slides source code (Rmarkdown) [here](https://github.com/Pakillo/ggplot-intro/blob/paperplanes/ggplot_intro.Rmd)
 
