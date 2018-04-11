@@ -112,6 +112,15 @@ include_graphics("images/ggtree.png")
 https://guangchuangyu.github.io/ggtree/
 
 
+## Made with ggplot
+
+```{r}
+include_graphics("images/plants.png")
+```
+
+https://github.com/marcusvolz/mathart
+
+
 ## Why ggplot
 
 - Extremely powerful and flexible
@@ -219,11 +228,11 @@ head(paperplanes)
 
 ## Data must be a tidy data frame
 
-```{r out.width="3in", out.height="3in"}
+```{r out.width="3.5in", out.height="3.5in"}
 include_graphics("images/tidy-1.png")
 ```
 
-```{r out.width="3in", out.height="3in"}
+```{r out.width="3.5in", out.height="3.5in"}
 include_graphics("images/tidy-9.png")
 ```
 
