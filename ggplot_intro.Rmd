@@ -121,6 +121,10 @@ include_graphics("images/plants.png")
 https://github.com/marcusvolz/mathart
 
 
+# Why ggplot?
+
+
+
 ## Why ggplot
 
 - Extremely powerful and flexible
@@ -215,7 +219,10 @@ include_graphics("images/so2.png")
 
 
 
-# Building a ggplot
+
+
+
+# Building a ggplot figure
 
 ## Our example dataset: paper planes flying experiment
 
@@ -261,18 +268,11 @@ ggplot(paperplanes, aes(x = age, y = distance)) +
 ```
 
 
-## Assigning ggplot objects
-
-```{r echo=c(1,2)}
-myplot <- ggplot(paperplanes, aes(x = age, y = distance)) 
-myplot + geom_point()
-```
-
-
 ## Changing point size and type
 
 ```{r echo=TRUE}
-myplot + geom_point(size = 2)
+ggplot(paperplanes, aes(x = age, y = distance)) + 
+  geom_point(size = 2)
 ```
 
 Check out `geom_point` help [here](http://docs.ggplot2.org/current/geom_point.html)
@@ -281,28 +281,32 @@ Check out `geom_point` help [here](http://docs.ggplot2.org/current/geom_point.ht
 ## Changing point size and type
 
 ```{r echo=TRUE}
-myplot + geom_point(size = 2, shape = 8)
+ggplot(paperplanes, aes(x = age, y = distance)) + 
+  geom_point(size = 2, shape = 8)
 ```
 
 
 ## Changing point size and type
 
 ```{r echo=TRUE}
-myplot + geom_point(size = 2, shape = 16, colour = "blue")
+ggplot(paperplanes, aes(x = age, y = distance)) + 
+  geom_point(size = 2, shape = 16, colour = "blue")
 ```
 
 
 ## Map geom aesthetics (e.g. colour) to variable
 
 ```{r echo=TRUE}
-myplot + geom_point(aes(colour = gender))
+ggplot(paperplanes, aes(x = age, y = distance)) + 
+  geom_point(aes(colour = gender))
 ```
 
 
 ## Map geom aesthetics (colour, shape) to variable
 
 ```{r echo=TRUE}
-myplot + geom_point(aes(colour = gender, shape = gender))
+ggplot(paperplanes, aes(x = age, y = distance)) + 
+  geom_point(aes(colour = gender, shape = gender))
 ```
 
 
@@ -318,7 +322,8 @@ http://serialmentor.com/dataviz/aesthetic-mapping.html
 ## Change colour scale
 
 ```{r echo=TRUE}
-myplot + geom_point(aes(colour = gender)) +
+ggplot(paperplanes, aes(x = age, y = distance)) + 
+  geom_point(aes(colour = gender)) +
   scale_colour_brewer(type = "qual", palette = 6)
 ```
 
@@ -326,54 +331,62 @@ myplot + geom_point(aes(colour = gender)) +
 ## Change colour scale
 
 ```{r echo=TRUE}
-myplot + geom_point(aes(colour = gender)) +
-  scale_colour_manual(values = c("pink", "blue"))
+ggplot(paperplanes, aes(x = age, y = distance)) + 
+  geom_point(aes(colour = gender)) +
+  scale_colour_manual(values = c("green", "blue"))
 ```
 
 
 
 ## Change axis labels: xlab & ylab
 
-```{r echo=1:2}
-myplot <- myplot + geom_point(aes(colour = gender))
-myplot <- myplot + 
+```{r echo=TRUE}
+ggplot(paperplanes, aes(x = age, y = distance)) + 
+  geom_point(aes(colour = gender)) +
   labs(x = "Age (years)", y = "Distance (m)")
-myplot
 ```
 
 
 
 ## Set title
 
-```{r echo=1}
-myplot <- myplot + 
+```{r echo=TRUE}
+ggplot(paperplanes, aes(x = age, y = distance)) + 
+  geom_point(aes(colour = gender)) +
+  labs(x = "Age (years)", y = "Distance (m)") +
   labs(title = "Distance flown by age")
-myplot
 ```
 
 
-## Adding another layer
+## Adding more layers
+
+```{r echo=TRUE}
+ggplot(paperplanes, aes(x = age, y = distance)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+
+## Adding more layers
 
 ```{r echo=1}
-myplot <- myplot + geom_smooth(method = "lm")
-myplot
+ggplot(paperplanes, aes(x = age, y = distance)) +
+  geom_point() +
+  geom_smooth(method = "lm") + 
+  geom_vline(xintercept = c(20, 40, 60))
 ```
 
 
-## Adding another layer
+## Adding more layers
 
 ```{r echo=1}
-myplot <- myplot + geom_vline(xintercept = c(20, 40, 60))
-myplot
+ggplot(paperplanes, aes(x = age, y = distance)) +
+  geom_point() +
+  geom_smooth(method = "lm") + 
+  geom_vline(xintercept = c(20, 40, 60)) + 
+  geom_hline(yintercept = 10)
 ```
 
-
-## Adding another layer
-
-```{r echo=1}
-myplot <- myplot + geom_hline(yintercept = 10)
-myplot
-```
 
 
 ## Exercise: Make a plot like this one
@@ -415,6 +428,39 @@ ggplot(paperplanes, aes(x = distance)) +
   labs(x = "Distance (m)", 
        title = "Distances flown by gender")
 ```
+
+
+
+# ggplot2 figures can be assigned as R objects
+
+## Assigning ggplot objects
+
+```{r echo=TRUE}
+myplot <- ggplot(paperplanes, aes(x = age, y = distance)) 
+myplot + geom_point()
+```
+
+
+## Assigning ggplot objects
+
+```{r echo=TRUE}
+myplot <- ggplot(paperplanes, aes(x = age, y = distance)) 
+myplot <- myplot + geom_point()
+myplot
+```
+
+
+## Assigning ggplot objects
+
+```{r echo=TRUE}
+baseplot <- ggplot(paperplanes, aes(x = age, y = distance)) 
+scatterplot <- baseplot + geom_point()
+labelled <- scatterplot + labs(x = "Age (years)", y = "Distance (m)")
+labelled
+```
+
+
+
 
 
 
@@ -525,7 +571,7 @@ myplot
 
 ----
 
-Publication themes:
+Some publication themes:
 
 https://gist.github.com/Pakillo/c2c7ea11c528cc2ee20f#themes
 
@@ -609,6 +655,9 @@ myplot <- ggplot(paperplanes, aes(age, distance)) + geom_point()
 ggplotly(myplot)
 ```
 
+
+
+# Summarising
 
 
 ## Grammar of graphics
