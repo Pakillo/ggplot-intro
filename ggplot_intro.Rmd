@@ -238,6 +238,15 @@ head(paperplanes)
 ```
 
 
+---
+
+Ensuring `paper` is factor, not numeric
+
+```{r echo=TRUE}
+paperplanes$paper <- as.factor(paperplanes$paper)
+```
+
+
 ## Data must be a tidy data frame
 
 ```{r out.width="3.5in", out.height="3.5in"}
@@ -261,7 +270,7 @@ ggplot(paperplanes)
 
 -----
 
-```{r eval=FALSE}
+```{r eval=FALSE, echo=TRUE}
 ggplot(paperplanes)
 ```
 
@@ -340,7 +349,7 @@ ggplot(paperplanes) +
 ```{r echo=TRUE}
 ggplot(paperplanes) +
   aes(x = age, y = distance) +  
-  geom_point(aes(colour = gender))
+  geom_point(aes(colour = paper))
 ```
 
 
@@ -348,11 +357,11 @@ ggplot(paperplanes) +
 
 Note difference between
 
-```{r eval=FALSE}
+```{r eval=FALSE, echo=TRUE}
 geom_point(colour = "blue")  # colour is given a concrete value ('blue')
 ```
 
-```{r eval=FALSE}
+```{r eval=FALSE, echo=TRUE}
 geom_point(aes(colour = gender))  # colour maps a *variable* (using `aes`)
 ```
 
@@ -367,7 +376,7 @@ This works:
 ```{r echo=TRUE}
 ggplot(paperplanes) +
   aes(x = age, y = distance) +  
-  geom_point(aes(colour = gender))
+  geom_point(aes(colour = paper))
 ```
 
 \endcol
@@ -379,12 +388,16 @@ This doesn't work:
 ```{r echo=TRUE, eval=FALSE}
 ggplot(paperplanes) +
   aes(x = age, y = distance) +  
-  geom_point(colour = gender)
+  geom_point(colour = paper)
 ```
 
-Error in layer(data = data, mapping = mapping, stat = stat, geom = GeomPoint,  : 
-  object 'gender' not found
+*Error in layer(data = data, mapping = mapping, stat = stat, geom = GeomPoint,  : *
+  *object 'paper' not found*
   
+'paper' is a variable in dataframe
+
+Must use `aes`
+
 \endcol
 \endcols
 
@@ -402,7 +415,16 @@ Even use different data
 ```{r echo=TRUE}
 ggplot(paperplanes) +
   aes(x = age, y = distance) + 
-  geom_point(aes(colour = gender, shape = gender))
+  geom_point(aes(colour = paper, shape = paper))
+```
+
+
+## Map geom aesthetics (colour, shape) to variable
+
+```{r echo=TRUE}
+ggplot(paperplanes) +
+  aes(x = age, y = distance) + 
+  geom_point(aes(colour = paper, shape = gender))
 ```
 
 
@@ -411,15 +433,17 @@ ggplot(paperplanes) +
 ```{r echo=TRUE}
 ggplot(paperplanes) +
   aes(x = age, y = distance) + 
-  geom_point(aes(colour = gender)) +
-  scale_colour_manual(values = c("green", "blue"))
+  geom_point(aes(colour = paper)) +
+  scale_colour_manual(values = c("orange", "blue"))
 ```
+
+
 
 
 ```{r echo=FALSE, eval=FALSE}
 ggplot(paperplanes) +
   aes(x = age, y = distance) + 
-  geom_point(aes(colour = gender)) +
+  geom_point(aes(colour = paper)) +
   scale_colour_brewer(type = "qual", palette = 6)
 ```
 
@@ -431,7 +455,7 @@ ggplot(paperplanes) +
 ```{r echo=TRUE}
 ggplot(paperplanes) +
   aes(x = age, y = distance) + 
-  geom_point(aes(colour = gender)) +
+  geom_point(aes(colour = paper)) +
   labs(x = "Age (years)", y = "Distance (m)")
 ```
 
@@ -442,7 +466,7 @@ ggplot(paperplanes) +
 ```{r echo=TRUE}
 ggplot(paperplanes) +
   aes(x = age, y = distance) + 
-  geom_point(aes(colour = gender)) +
+  geom_point(aes(colour = paper)) +
   labs(x = "Age (years)", y = "Distance (m)") +
   labs(title = "Distance flown by age")
 ```
@@ -484,9 +508,9 @@ ggplot(paperplanes) +
 ## Summary
 
 ```{r eval=FALSE, echo=TRUE}
-ggplot(paperplanes) +  # Name of (tidy) data frame
-  aes(x = age, y = distance) + # Aesthetics (variables to be represented in axes)
-  geom_point()  # Geoms: geometric objects
+ggplot(paperplanes) +          # Name of (tidy) data frame
+  aes(x = age, y = distance) + # Aesthetics (variables to map in axes)
+  geom_point()                 # Geoms: geometric objects
 ```
 
 
@@ -505,7 +529,8 @@ ggplot(paperplanes) +
 ## Exercise: Make a plot like this one
 
 ```{r}
-ggplot(paperplanes, aes(x = gender, y = distance)) +
+ggplot(paperplanes) +
+  aes(x = gender, y = distance) +
   geom_violin() +
   labs(x = "Gender", y = "Distance (m)", 
        title = "Distance flown by gender")
@@ -515,7 +540,8 @@ ggplot(paperplanes, aes(x = gender, y = distance)) +
 ## Exercise: Make a plot like this one
 
 ```{r}
-ggplot(paperplanes, aes(x = gender, y = distance)) +
+ggplot(paperplanes) +
+  aes(x = gender, y = distance) +
   geom_violin(fill = "orange") +
   geom_point() +
   labs(x = "Gender", y = "Distance (m)", 
@@ -526,20 +552,32 @@ ggplot(paperplanes, aes(x = gender, y = distance)) +
 ## Exercise: Make a plot like this one
 
 ```{r}
-ggplot(paperplanes, aes(x = distance)) +
+ggplot(paperplanes) +
+  aes(x = distance) +
   geom_density(aes(colour = gender, fill = gender), alpha = 0.5) +
   labs(x = "Distance (m)", 
        title = "Distances flown by gender")
 ```
 
 
+## Exercise: Make a plot like this one
 
-# ggplot2 figures can be assigned as R objects
+```{r echo=TRUE}
+ggplot(paperplanes) +
+  aes(x = age, y = distance, colour = paper) + 
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+
+
+# ggplot2 figures can be assigned to R objects
 
 ## Assigning ggplot objects
 
 ```{r echo=TRUE}
-myplot <- ggplot(paperplanes, aes(x = age, y = distance)) 
+myplot <- ggplot(paperplanes) +
+  aes(x = age, y = distance) 
 myplot + geom_point()
 ```
 
@@ -547,7 +585,8 @@ myplot + geom_point()
 ## Assigning ggplot objects
 
 ```{r echo=TRUE}
-myplot <- ggplot(paperplanes, aes(x = age, y = distance)) 
+myplot <- ggplot(paperplanes) +
+  aes(x = age, y = distance) 
 myplot <- myplot + geom_point()
 myplot
 ```
@@ -556,7 +595,8 @@ myplot
 ## Assigning ggplot objects
 
 ```{r echo=TRUE}
-baseplot <- ggplot(paperplanes, aes(x = age, y = distance)) 
+baseplot <- ggplot(paperplanes) + 
+  aes(x = age, y = distance)
 scatterplot <- baseplot + geom_point()
 labelled <- scatterplot + labs(x = "Age (years)", y = "Distance (m)")
 labelled
@@ -573,8 +613,9 @@ labelled
 ## myplot
 
 ```{r echo=1}
-myplot <- ggplot(paperplanes, aes(x = age, y = distance)) + 
-  geom_point()
+myplot <- ggplot(paperplanes) + 
+  aes(x = age, y = distance, colour = paper) + 
+  geom_point() 
 myplot
 ```
 
@@ -610,25 +651,33 @@ myplot + theme_wsj()
 
 
 
+
 ## Editing themes
 
 ```{r echo=TRUE, eval=FALSE}
 ?theme
 ```
 
+- `element_blank`
+- `element_text`
+- `element_line`
+- `element_rect` (borders & backgrounds)
+
 
 
 ## Exercise: make a plot like this one
 
 ```{r}
-ggplot(paperplanes, aes(x = age, y = distance, colour = gender)) +
+ggplot(paperplanes) +
+  aes(x = age, y = distance, colour = paper) +
   geom_point() + 
   labs(x = "Age (years)", y = "Distance (m)", 
        title = "Changing plot appearance") +
   theme(axis.title.x = element_text(colour = "blue"),
         axis.title.y = element_text(colour = "red"),
         plot.title = element_text(size = 16),
-        legend.key = element_rect(fill = "white")
+        legend.key = element_rect(fill = "white"),
+        legend.position = "bottom"
         )
 ```
 
@@ -664,6 +713,19 @@ http://mbjoseph.github.io/2015/02/26/plotting.html
 serialmentor.com/dataviz/choosing-the-right-visualization-software.html
 
 
+## Think twice before editing plots out of R
+
+Referee #3: 
+
+"Please increase font size in all figures"
+
+```{r echo=TRUE}
+myplot +
+  theme(axis.title = element_text(size = 18))
+```
+
+
+
 ## Publication-quality plots
 
 ```{r echo=TRUE}
@@ -687,8 +749,8 @@ https://gist.github.com/Pakillo/c2c7ea11c528cc2ee20f#themes
 
 ```{r echo=TRUE, out.width='4in', out.height='3in'}
 library(cowplot)
-plot1 <- ggplot(paperplanes, aes(age, distance)) + geom_point()
-plot2 <- ggplot(paperplanes, aes(gender, distance)) + geom_boxplot()
+plot1 <- ggplot(paperplanes) + aes(age, distance) + geom_point()
+plot2 <- ggplot(paperplanes) + aes(gender, distance) + geom_boxplot()
 plot_grid(plot1, plot2, labels = "AUTO")
 ```
 
@@ -696,8 +758,8 @@ plot_grid(plot1, plot2, labels = "AUTO")
 ## Composite figures
 
 ```{r echo=3, out.width='3in', out.height='5in'}
-plot1 <- ggplot(paperplanes, aes(age, distance)) + geom_point()
-plot2 <- ggplot(paperplanes, aes(gender, distance)) + geom_boxplot()
+plot1 <- ggplot(paperplanes) + aes(age, distance) + geom_point()
+plot2 <- ggplot(paperplanes) + aes(gender, distance) + geom_boxplot()
 plot_grid(plot1, plot2, labels = "AUTO", ncol = 1)
 ```
 
@@ -721,12 +783,15 @@ https://cran.r-project.org/web/packages/egg/index.html
 
 
 
-## Saving plot: ggsave
+## Saving plot
 
 ```{r echo=TRUE, eval=FALSE}
 ggsave("myplot.pdf")
 ```
 
+```{r echo=TRUE, eval=FALSE}
+save_plot("myplot.pdf")
+```
 
 
 # Facetting
@@ -734,9 +799,9 @@ ggsave("myplot.pdf")
 ## Facetting
 
 ```{r echo=TRUE, out.width='3in', out.height='2.5in'}
-ggplot(paperplanes, aes(age, distance)) +
+ggplot(paperplanes) + aes(age, distance) +
     geom_point() + theme_bw(base_size = 12) +
-  facet_wrap(~gender)
+  facet_wrap(~paper)
 ```
 
 
@@ -745,8 +810,9 @@ ggplot(paperplanes, aes(age, distance)) +
 
 ```{r echo=TRUE, out.width='3in', out.height='2.5in'}
 ggplot(paperplanes) +
-  geom_histogram(aes(distance)) + theme_minimal(base_size = 8) + 
-  facet_wrap(~gender, nrow = 2)
+  geom_histogram(aes(distance)) + 
+  theme_minimal(base_size = 8) + 
+  facet_wrap(~paper, nrow = 2)
 ```
 
 
@@ -759,25 +825,31 @@ ggplotly(myplot)
 ```
 
 
+## Animated graphs
+
+https://github.com/thomasp85/gganimate
+
+[![](images/gganimate.png)](https://github.com/thomasp85/gganimate#yet-another-example)
+
 
 # Summarising
 
 
 ## Grammar of graphics
 
-- Data (tidy data frame)
+- **Data** (tidy data frame)
 
-- Coordinate system (Cartesian, polar, map projections...)
+- **Layers** (**geoms**: points, lines, polygons...)
 
-- Layers (geoms: points, lines, polygons...)
+- **Aesthetics** mappings (x, y, size, colour...)
 
-- Aesthetics mappings (x, y, size, colour...)
+- **Scales** (colour, size, shape...)
 
-- Scales (colour, size, shape...)
+- **Facets** (small multiples)
 
-- Facets (small multiples)
+- **Themes** (appearance)
 
-- Themes (appearance)
+- **Coordinate system** (Cartesian, polar, map projections...)
 
 
 
@@ -786,7 +858,8 @@ ggplotly(myplot)
 ## Exercise: make a plot like this one
 
 ```{r}
-ggplot(paperplanes, aes(factor(paper), distance)) +
+ggplot(paperplanes) +
+  aes(factor(paper), distance) +
   geom_violin()
 ```
 
@@ -795,7 +868,8 @@ ggplot(paperplanes, aes(factor(paper), distance)) +
 ## Exercise: make a plot like this one
 
 ```{r fig.height=4, fig.width=5}
-ggplot(paperplanes, aes(age, distance)) +
+ggplot(paperplanes) +
+  aes(age, distance) +
   geom_point() +
   geom_smooth() +
   theme_minimal(base_size = 8) +
@@ -808,7 +882,8 @@ ggplot(paperplanes, aes(age, distance)) +
 ## Exercise: make a plot like this one
 
 ```{r fig.height=4, fig.width=5}
-ggplot(paperplanes, aes(age, distance)) +
+ggplot(paperplanes) +
+  aes(age, distance) +
   geom_point(aes(colour = gender)) +
   geom_smooth(aes(colour = gender)) +
   theme_minimal(base_size = 12) +
@@ -838,6 +913,43 @@ lautree <- tol_induced_subtree(ott_ids = unlist(ott_id(lauraceae)))
 ggtree(lautree) + geom_tiplab() 
 ```
 
+
+## Exercise: make a plot like this one
+
+Data from http://www.columbia.edu/~mhs119/Sensitivity+SL+CO2/Table.txt
+
+```{r cache=TRUE, out.width='7in'}
+hansen <- read.table("http://www.columbia.edu/~mhs119/Sensitivity+SL+CO2/Table.txt",
+                     header = FALSE, dec = ".", nrows = 17604, skip = 9)
+hansen <- hansen[, c(3,6)]
+names(hansen) <- c("MyrBP", "Tabs")
+hansen$logtime <- log10(hansen$MyrBP)
+
+
+timebreaks <- c(0.001, 0.01, 0.1, 1, 10, 66)  # in MyrBP
+timebreaks.log <- log10(timebreaks)
+time.labels <- latex2exp::TeX(c("10^{-3}", "10^{-2}",
+                  "10^{-1}", "1", "10", "66"))
+
+temp <- ggplot(hansen, aes(x = logtime, y = Tabs)) +
+  ylim(9, 30) +
+  labs(x = "Millions of years BP", y = "Temperature (ºC)") +
+  theme(axis.text.x = element_text(size = 10)) +
+  geom_line(colour = "Dark Red") +
+  scale_x_continuous(breaks = timebreaks.log,
+                     labels = time.labels,
+                     trans = "reverse")
+
+
+epochs.start <- c(0.0117, 2.58, 5.333, 23.03, 33.9, 56, 66)  # from geoscale
+
+temp.paleo <- temp +
+  geom_vline(xintercept = log10(epochs.start), linetype = "dashed", size = 0.2) +
+  annotate("text", label = c("P", "Eo", "Ol", "Mi", "Pli", "Ple", "Hol"),
+            x = c(1.78, 1.63, 1.44, 1.07, 0.58, -0.7, -2.9),
+           y = 30, size = 3)
+temp.paleo
+```
 
 
 ## Exercise: make a plot like this one
