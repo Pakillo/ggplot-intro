@@ -245,7 +245,7 @@ include_graphics("images/tidy-1.png")
 ```
 
 ```{r out.width="3.5in", out.height="3.5in"}
-include_graphics("images/tidy-9.png")
+include_graphics("images/tidy-9b.png")
 ```
 
 http://r4ds.had.co.nz/tidy-data.html
@@ -259,63 +259,33 @@ ggplot(paperplanes)
 ```
 
 
+-----
+
+```{r eval=FALSE}
+ggplot(paperplanes)
+```
+
+First argument is a tidy data frame
+
+
 ## What variables as axes?
 
 ```{r echo=TRUE}
-ggplot(paperplanes, aes(x = age, y = distance))
+ggplot(paperplanes) +
+  aes(x = age, y = distance)
 ```
 
-## Adding layers (geoms)
+Note syntax: + followed by new line
 
-```{r echo=TRUE, eval=TRUE}
-ggplot(paperplanes, aes(x = age, y = distance)) +
-  geom_point()
+
+----
+
+```{r echo=TRUE, eval=FALSE}
+ggplot(paperplanes) +
+  aes(x = age, y = distance)
 ```
 
-
-## Changing point size and type
-
-```{r echo=TRUE}
-ggplot(paperplanes, aes(x = age, y = distance)) + 
-  geom_point(size = 2)
-```
-
-Check out `geom_point` help [here](http://docs.ggplot2.org/current/geom_point.html)
-
-
-## Changing point size and type
-
-```{r echo=TRUE}
-ggplot(paperplanes, aes(x = age, y = distance)) + 
-  geom_point(size = 2, shape = 8)
-```
-
-
-## Changing point size and type
-
-```{r echo=TRUE}
-ggplot(paperplanes, aes(x = age, y = distance)) + 
-  geom_point(size = 2, shape = 16, colour = "blue")
-```
-
-
-## Map geom aesthetics (e.g. colour) to variable
-
-```{r echo=TRUE}
-ggplot(paperplanes, aes(x = age, y = distance)) + 
-  geom_point(aes(colour = gender))
-```
-
-
-## Map geom aesthetics (colour, shape) to variable
-
-```{r echo=TRUE}
-ggplot(paperplanes, aes(x = age, y = distance)) + 
-  geom_point(aes(colour = gender, shape = gender))
-```
-
-
-## Common aesthetics
+**Aesthetics** (`aes`) map data variables (*age*, *distance*) to graphic elements (*axes*)
 
 ```{r out.width="4in", out.height="3in"}
 include_graphics("images/aesthetics_Wilke.png")
@@ -324,29 +294,143 @@ include_graphics("images/aesthetics_Wilke.png")
 http://serialmentor.com/dataviz/aesthetic-mapping.html
 
 
-## Change colour scale
+
+
+
+## Adding layers (geoms)
+
+```{r echo=TRUE, eval=TRUE}
+ggplot(paperplanes) +
+  aes(x = age, y = distance) +
+  geom_point()
+```
+
+
+## Changing point size and type
 
 ```{r echo=TRUE}
-ggplot(paperplanes, aes(x = age, y = distance)) + 
-  geom_point(aes(colour = gender)) +
-  scale_colour_brewer(type = "qual", palette = 6)
+ggplot(paperplanes) +
+  aes(x = age, y = distance) + 
+  geom_point(size = 2)
+```
+
+Check out `geom_point` help [here](https://ggplot2.tidyverse.org/reference/geom_point.html)
+
+
+## Changing point size and type
+
+```{r echo=TRUE}
+ggplot(paperplanes) +
+  aes(x = age, y = distance) + 
+  geom_point(size = 2, shape = 8)
+```
+
+
+## Changing point size and type
+
+```{r echo=TRUE}
+ggplot(paperplanes) +
+  aes(x = age, y = distance) + 
+  geom_point(size = 2, shape = 16, colour = "blue")
+```
+
+
+## Map geom aesthetics (e.g. colour) to variable
+
+```{r echo=TRUE}
+ggplot(paperplanes) +
+  aes(x = age, y = distance) +  
+  geom_point(aes(colour = gender))
+```
+
+
+----
+
+Note difference between
+
+```{r eval=FALSE}
+geom_point(colour = "blue")  # colour is given a concrete value ('blue')
+```
+
+```{r eval=FALSE}
+geom_point(aes(colour = gender))  # colour maps a *variable* (using `aes`)
+```
+
+
+----
+
+\begincols
+\begincol
+
+This works:
+
+```{r echo=TRUE}
+ggplot(paperplanes) +
+  aes(x = age, y = distance) +  
+  geom_point(aes(colour = gender))
+```
+
+\endcol
+
+\begincol
+
+This doesn't work:
+
+```{r echo=TRUE, eval=FALSE}
+ggplot(paperplanes) +
+  aes(x = age, y = distance) +  
+  geom_point(colour = gender)
+```
+
+Error in layer(data = data, mapping = mapping, stat = stat, geom = GeomPoint,  : 
+  object 'gender' not found
+  
+\endcol
+\endcols
+
+
+----
+
+Each geom can have their own aesthetics (`aes`)
+
+Even use different data
+
+
+
+## Map geom aesthetics (colour, shape) to variable
+
+```{r echo=TRUE}
+ggplot(paperplanes) +
+  aes(x = age, y = distance) + 
+  geom_point(aes(colour = gender, shape = gender))
 ```
 
 
 ## Change colour scale
 
 ```{r echo=TRUE}
-ggplot(paperplanes, aes(x = age, y = distance)) + 
+ggplot(paperplanes) +
+  aes(x = age, y = distance) + 
   geom_point(aes(colour = gender)) +
   scale_colour_manual(values = c("green", "blue"))
+```
+
+
+```{r echo=FALSE, eval=FALSE}
+ggplot(paperplanes) +
+  aes(x = age, y = distance) + 
+  geom_point(aes(colour = gender)) +
+  scale_colour_brewer(type = "qual", palette = 6)
 ```
 
 
 
 ## Change axis labels: xlab & ylab
 
+
 ```{r echo=TRUE}
-ggplot(paperplanes, aes(x = age, y = distance)) + 
+ggplot(paperplanes) +
+  aes(x = age, y = distance) + 
   geom_point(aes(colour = gender)) +
   labs(x = "Age (years)", y = "Distance (m)")
 ```
@@ -356,7 +440,8 @@ ggplot(paperplanes, aes(x = age, y = distance)) +
 ## Set title
 
 ```{r echo=TRUE}
-ggplot(paperplanes, aes(x = age, y = distance)) + 
+ggplot(paperplanes) +
+  aes(x = age, y = distance) + 
   geom_point(aes(colour = gender)) +
   labs(x = "Age (years)", y = "Distance (m)") +
   labs(title = "Distance flown by age")
@@ -366,7 +451,8 @@ ggplot(paperplanes, aes(x = age, y = distance)) +
 ## Adding more layers
 
 ```{r echo=TRUE}
-ggplot(paperplanes, aes(x = age, y = distance)) +
+ggplot(paperplanes) +
+  aes(x = age, y = distance) + 
   geom_point() +
   geom_smooth(method = "lm")
 ```
@@ -375,7 +461,8 @@ ggplot(paperplanes, aes(x = age, y = distance)) +
 ## Adding more layers
 
 ```{r echo=1}
-ggplot(paperplanes, aes(x = age, y = distance)) +
+ggplot(paperplanes) +
+  aes(x = age, y = distance) + 
   geom_point() +
   geom_smooth(method = "lm") + 
   geom_vline(xintercept = c(20, 40, 60))
@@ -385,7 +472,8 @@ ggplot(paperplanes, aes(x = age, y = distance)) +
 ## Adding more layers
 
 ```{r echo=1}
-ggplot(paperplanes, aes(x = age, y = distance)) +
+ggplot(paperplanes) +
+  aes(x = age, y = distance) + 
   geom_point() +
   geom_smooth(method = "lm") + 
   geom_vline(xintercept = c(20, 40, 60)) + 
@@ -393,11 +481,21 @@ ggplot(paperplanes, aes(x = age, y = distance)) +
 ```
 
 
+## Summary
+
+```{r eval=FALSE, echo=TRUE}
+ggplot(paperplanes) +  # Name of (tidy) data frame
+  aes(x = age, y = distance) + # Aesthetics (variables to be represented in axes)
+  geom_point()  # Geoms: geometric objects
+```
+
+
 
 ## Exercise: Make a plot like this one
 
 ```{r}
-ggplot(paperplanes, aes(x = gender, y = distance)) +
+ggplot(paperplanes) +
+  aes(x = gender, y = distance) +
   geom_boxplot() +
   labs(x = "Gender", y = "Distance (m)", 
        title = "Distance flown by gender")
@@ -732,11 +830,11 @@ ggplot(paperplanes) +
 
 
 
-```{r include=FALSE}
+```{r include=FALSE, eval=FALSE}
 library(rotl)
 library(ggtree)
 lauraceae <- tnrs_match_names(c("Quercus suber", "Quercus ilex", "Pinus pinea", "Laurus nobilis"))
-lautree <- tol_induced_subtree(ott_ids = ott_id(lauraceae))
+lautree <- tol_induced_subtree(ott_ids = unlist(ott_id(lauraceae)))
 ggtree(lautree) + geom_tiplab() 
 ```
 
