@@ -156,7 +156,7 @@ Source: https://github.com/jennybc/ggplot2-tutorial
 ## Very good documentation and tutorials
 
 
-- [Official ggplot2 documentation](http://docs.ggplot2.org/current/)  
+- [Official ggplot2 documentation](https://ggplot2.tidyverse.org/reference/)  
 - [ggplot2 book](https://github.com/hadley/ggplot2-book) 
 - [R graphics cookbook](http://shop.oreilly.com/product/0636920023135.do) and [Cookbook for R](http://www.cookbook-r.com/Graphs/)  
 - [Beautiful plotting in R: A ggplot2 cheatsheet](http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/)  
@@ -169,7 +169,7 @@ Source: https://github.com/jennybc/ggplot2-tutorial
 - [Data visualisation chapter in R for Data Science](http://r4ds.had.co.nz/data-visualisation.html)
 - [The complete ggplot2 tutorial](http://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html)
 - [Data visualization: a practical introduction (K. Healy)](http://socviz.co/)
-- [Fundamentals of data visualization](http://serialmentor.com/dataviz/)
+- [Fundamentals of data visualization (C. Wilke)](http://serialmentor.com/dataviz/)
 
 
 
