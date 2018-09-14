@@ -186,7 +186,10 @@ https://www.rstudio.com/resources/cheatsheets/
 
 ## Repos of figures + code
 
+
 - [R graph catalog](http://shiny.stat.ubc.ca/r-graph-catalog/)
+
+- [From Data to Viz](https://www.data-to-viz.com/)
 
 - [The R graph gallery](http://www.r-graph-gallery.com/)
 
@@ -197,6 +200,8 @@ https://www.rstudio.com/resources/cheatsheets/
 - [Graphical data analysis with R](http://www.gradaanwr.net/)
 
 - [IEG figures](https://github.com/PJordano-Lab/R-figures)
+
+
 
 
 
