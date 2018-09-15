@@ -358,11 +358,13 @@ ggplot(paperplanes) +
 Note difference between
 
 ```{r eval=FALSE, echo=TRUE}
-geom_point(colour = "blue")  # colour is given a concrete value ('blue')
+geom_point(colour = "blue")  
+# colour is given a concrete value ('blue')
 ```
 
 ```{r eval=FALSE, echo=TRUE}
-geom_point(aes(colour = gender))  # colour maps a *variable* (using `aes`)
+geom_point(aes(colour = gender))  
+# colour maps a *variable* (using `aes`)
 ```
 
 
@@ -393,20 +395,20 @@ ggplot(paperplanes) +
 
 *Error in layer(data = data, mapping = mapping, stat = stat, geom = GeomPoint,  : *
   *object 'paper' not found*
-  
+
+. 
+
+.
+
 'paper' is a variable in dataframe
 
-Must use `aes`
+.
+
+**Must use `aes`**
 
 \endcol
 \endcols
 
-
-----
-
-Each geom can have their own aesthetics (`aes`)
-
-Even use different data
 
 
 
@@ -562,7 +564,7 @@ ggplot(paperplanes) +
 
 ## Exercise: Make a plot like this one
 
-```{r echo=TRUE}
+```{r}
 ggplot(paperplanes) +
   aes(x = age, y = distance, colour = paper) + 
   geom_point() +
@@ -715,9 +717,7 @@ serialmentor.com/dataviz/choosing-the-right-visualization-software.html
 
 ## Think twice before editing plots out of R
 
-Referee #3: 
-
-"Please increase font size in all figures"
+Referee #3: "Please increase font size in all figures"
 
 ```{r echo=TRUE}
 myplot +
@@ -794,7 +794,7 @@ save_plot("myplot.pdf")
 ```
 
 
-# Facetting
+# Facetting (small multiples)
 
 ## Facetting
 
@@ -820,7 +820,9 @@ ggplot(paperplanes) +
 
 ```{r echo=TRUE, eval=FALSE}
 library(plotly)
-myplot <- ggplot(paperplanes, aes(age, distance)) + geom_point()
+myplot <- ggplot(paperplanes) +
+  aes(age, distance)) + 
+  geom_point()
 ggplotly(myplot)
 ```
 
@@ -829,17 +831,17 @@ ggplotly(myplot)
 
 https://github.com/thomasp85/gganimate
 
-[![](images/gganimate.png)](https://github.com/thomasp85/gganimate#yet-another-example)
+[![](images/gganimate.png)](https://raw.githubusercontent.com/thomasp85/gganimate/master/man/figures/README-unnamed-chunk-4-1.gif)
 
 
-# Summarising
+# Summary
 
 
 ## Grammar of graphics
 
 - **Data** (tidy data frame)
 
-- **Layers** (**geoms**: points, lines, polygons...)
+- **Layers** (*geoms*: points, lines, polygons...)
 
 - **Aesthetics** mappings (x, y, size, colour...)
 
@@ -918,7 +920,7 @@ ggtree(lautree) + geom_tiplab()
 
 Data from http://www.columbia.edu/~mhs119/Sensitivity+SL+CO2/Table.txt
 
-```{r cache=TRUE, out.width='7in'}
+```{r cache=TRUE, fig.width=6}
 hansen <- read.table("http://www.columbia.edu/~mhs119/Sensitivity+SL+CO2/Table.txt",
                      header = FALSE, dec = ".", nrows = 17604, skip = 9)
 hansen <- hansen[, c(3,6)]
