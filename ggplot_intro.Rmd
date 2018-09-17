@@ -328,7 +328,7 @@ ggplot(trees) +
 
 ## Map geom aesthetics (e.g. colour) to variable
 
-```{r echo=TRUE}
+```{r echo=TRUE, fig.width=5}
 ggplot(trees) +
   aes(x = dbh, y = height) +
   geom_point(aes(colour = sex))
@@ -397,7 +397,7 @@ ggplot(trees) +
 
 ## Map geom aesthetics (colour, shape) to variable
 
-```{r echo=TRUE}
+```{r echo=TRUE, fig.width=5}
 ggplot(trees) +
   aes(x = dbh, y = height) + 
   geom_point(aes(colour = sex, shape = sex))
@@ -409,13 +409,31 @@ ggplot(trees) +
 ```{r echo=TRUE}
 ggplot(trees) +
   aes(x = dbh, y = height) + 
-  geom_point(aes(colour = factor(plot), shape = sex))
+  geom_point(aes(colour = plot, shape = sex))
+```
+
+
+----- 
+
+Ensuring 'plot' is a factor, not numeric
+
+```{r echo=TRUE}
+trees$plot <- as.factor(trees$plot)
+```
+
+
+## Map geom aesthetics (colour, shape) to variable
+
+```{r echo=TRUE, fig.width=5}
+ggplot(trees) +
+  aes(x = dbh, y = height) + 
+  geom_point(aes(colour = plot, shape = sex))
 ```
 
 
 ## Change colour scale
 
-```{r echo=TRUE}
+```{r echo=TRUE, fig.width=5}
 ggplot(trees) +
   aes(x = dbh, y = height) + 
   geom_point(aes(colour = sex)) +
@@ -425,7 +443,7 @@ ggplot(trees) +
 
 ## Change colour scale
 
-```{r echo=TRUE}
+```{r echo=TRUE, fig.width=5}
 ggplot(trees) +
   aes(x = dbh, y = height) + 
   geom_point(aes(colour = sex)) +
@@ -436,7 +454,7 @@ ggplot(trees) +
 
 ## Change axis labels: xlab & ylab
 
-```{r echo=1:4}
+```{r echo=TRUE}
 ggplot(trees) +
   aes(x = dbh, y = height) + 
   geom_point() +
@@ -447,7 +465,7 @@ ggplot(trees) +
 
 ## Set title
 
-```{r echo=TRUE}
+```{r echo=TRUE, fig.width=5}
 ggplot(trees) +
   aes(x = dbh, y = height) + 
   geom_point(aes(colour = sex)) +
@@ -458,7 +476,7 @@ ggplot(trees) +
 
 ## Adding more layers
 
-```{r echo=TRUE}
+```{r echo=TRUE, fig.width=5}
 ggplot(trees) +
   aes(x = dbh, y = height) + 
   geom_point() +
@@ -468,7 +486,7 @@ ggplot(trees) +
 
 ## Adding more layers
 
-```{r echo=TRUE}
+```{r echo=TRUE, fig.width=5}
 ggplot(trees) +
   aes(x = dbh, y = height) + 
   geom_point() +
@@ -479,7 +497,7 @@ ggplot(trees) +
 
 ## Adding more layers
 
-```{r echo=TRUE}
+```{r echo=TRUE, fig.width=5}
 ggplot(trees) +
   aes(x = dbh, y = height) + 
   geom_point() +
@@ -502,9 +520,9 @@ ggplot(trees) +                 # Name of (tidy) data frame
 
 ## Exercise: Make a plot like this one
 
-```{r}
+```{r fig.width=5}
 ggplot(trees) +
-  aes(x = factor(plot), y = height) +
+  aes(x = plot, y = height) +
   geom_boxplot() +
   labs(x = "Study plot", y = "Height (m)") + 
   labs(title = "Tree heights per plot")
@@ -513,9 +531,9 @@ ggplot(trees) +
 
 ## Exercise: Make a plot like this one
 
-```{r}
+```{r fig.width=5}
 ggplot(trees) +
-  aes(x = factor(plot), y = height) +
+  aes(x = plot, y = height) +
   geom_violin() +
   labs(x = "Study plot", y = "Height (m)") + 
   labs(title = "Tree heights per plot") +
@@ -525,7 +543,7 @@ ggplot(trees) +
 
 ## Exercise: Make a plot like this one
 
-```{r}
+```{r fig.width=5}
 ggplot(trees) +
   aes(x = height) +
   geom_density(aes(colour = sex, fill = sex), alpha = 0.5) +
@@ -535,7 +553,7 @@ ggplot(trees) +
 
 ## Exercise: Make a plot like this one
 
-```{r}
+```{r fig.width=5}
 ggplot(trees) +
   aes(x = dbh) +
   geom_density(aes(colour = sex, fill = sex), alpha = 0.5) +
@@ -546,7 +564,7 @@ ggplot(trees) +
 
 ## Exercise: Make a plot like this one
 
-```{r}
+```{r fig.width=5}
 ggplot(trees) +
   aes(x = dbh, y = height, colour = sex) + 
   geom_point() +
@@ -556,7 +574,7 @@ ggplot(trees) +
 
 ## Exercise: Make a plot like this one
 
-```{r}
+```{r fig.width=5}
 ggplot(trees) +
   aes(x = dbh, y = height) + 
   geom_point() +
@@ -657,7 +675,7 @@ myplot + theme_wsj()
 
 ## Exercise: make a plot like this one
 
-```{r}
+```{r fig.width=5}
 ggplot(trees) +
   aes(x = dbh, y = height, colour = sex) +
   geom_point() + 
@@ -785,7 +803,7 @@ save_plot("myplot.pdf")
 
 ## Facetting
 
-```{r echo=TRUE, out.width='3in', out.height='2.5in'}
+```{r echo=TRUE, fig.width=5, fig.height=3}
 ggplot(trees) + aes(dbh, height) +
   geom_point() + theme_minimal(base_size = 8) +
   facet_wrap(~plot)
@@ -794,7 +812,7 @@ ggplot(trees) + aes(dbh, height) +
 
 ## Facetting
 
-```{r echo=TRUE, out.width='3in', out.height='2.5in'}
+```{r echo=TRUE, fig.width=5, fig.height=3}
 ggplot(trees) +
   geom_histogram(aes(height)) + theme_minimal(base_size = 8) + 
   facet_wrap(~plot, nrow = 2)
@@ -817,6 +835,26 @@ ggplotly(myplot)
 https://github.com/thomasp85/gganimate
 
 [![](images/gganimate.png)](https://raw.githubusercontent.com/thomasp85/gganimate/master/man/figures/README-unnamed-chunk-4-1.gif)
+
+
+
+## Automatic label placement
+
+```{r}
+include_graphics("images/ggrepel.png")
+```
+
+https://cran.r-project.org/package=ggrepel
+
+
+## Many extensions!
+
+https://www.ggplot2-exts.org/
+
+```{r}
+include_graphics("images/ggexts.PNG")
+```
+
 
 
 
