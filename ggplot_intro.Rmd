@@ -834,6 +834,25 @@ https://github.com/thomasp85/gganimate
 [![](images/gganimate.png)](https://raw.githubusercontent.com/thomasp85/gganimate/master/man/figures/README-unnamed-chunk-4-1.gif)
 
 
+## Automatic label placement
+
+```{r}
+include_graphics("images/ggrepel.png")
+```
+
+https://cran.r-project.org/package=ggrepel
+
+
+## Many extensions!
+
+https://www.ggplot2-exts.org/
+
+```{r}
+include_graphics("images/ggexts.PNG")
+```
+
+
+
 # Summary
 
 
