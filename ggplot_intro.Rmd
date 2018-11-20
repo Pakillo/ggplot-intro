@@ -927,7 +927,7 @@ ggplot(trees) +
 ggplot(trees) +
   geom_histogram(aes(height)) +
   facet_wrap(~sex, nrow = 2) + 
-  labs(x = "DBH (cm)", y = "Height (m)", 
+  labs(x = "Height (m)", y = "Number of trees",
        title = "Tree allometry") +
   theme(plot.title = element_text(hjust = 0.5))
 ```
