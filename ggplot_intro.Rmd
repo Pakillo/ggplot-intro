@@ -121,10 +121,6 @@ include_graphics("images/plants.png")
 https://github.com/marcusvolz/mathart
 
 
-# Why ggplot?
-
-
-
 ## Why ggplot
 
 - Extremely powerful and flexible
@@ -160,18 +156,16 @@ Source: https://github.com/jennybc/ggplot2-tutorial
 - [ggplot2 book](https://github.com/hadley/ggplot2-book) 
 - [R graphics cookbook](http://shop.oreilly.com/product/0636920023135.do) and [Cookbook for R](http://www.cookbook-r.com/Graphs/)  
 - [Beautiful plotting in R: A ggplot2 cheatsheet](http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/)  
-- [Introduction to ggplot2](http://opr.princeton.edu/workshops/201401/ggplot2Jan2014DawnKoffman.pdf) 
-- [Tutorial: ggplot2](http://www.ceb-institute.org/bbs/wp-content/uploads/2011/09/handout_ggplot2.pdf)  
+- [Introduction to ggplot2](https://opr.princeton.edu/workshops/Downloads/2015Jan_ggplot2Koffman.pdf) 
+- [Tutorial: ggplot2](http://bbs.ceb-institute.org/wp-content/uploads/2011/09/handout_ggplot2.pdf)  
 - [How to format plots for publication using ggplot2](http://www.noamross.net/blog/2013/11/20/formatting-plots-for-pubs.html)  
-- [Visualising data with ggplot2](http://handsondatascience.com/GGPlot2O.pdf) 
+- [Visualising data with ggplot2](https://onepager.togaware.com/GGPlot2O.pdf) 
 - [Data Visualization with R and ggplot2](https://github.com/pablobarbera/Rdataviz)  
 - [ggplot2 tutorial](https://github.com/jennybc/ggplot2-tutorial)  
 - [Data visualisation chapter in R for Data Science](http://r4ds.had.co.nz/data-visualisation.html)
 - [The complete ggplot2 tutorial](http://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html)
 - [Data visualization: a practical introduction (K. Healy)](http://socviz.co/)
 - [Fundamentals of data visualization (C. Wilke)](http://serialmentor.com/dataviz/)
-
-
 
 
 ## Cheatsheet
@@ -183,9 +177,7 @@ include_graphics("images/cheatsheet.png")
 https://www.rstudio.com/resources/cheatsheets/
 
 
-
 ## Repos of figures + code
-
 
 - [R graph catalog](http://shiny.stat.ubc.ca/r-graph-catalog/)
 
@@ -200,8 +192,6 @@ https://www.rstudio.com/resources/cheatsheets/
 - [Graphical data analysis with R](http://www.gradaanwr.net/)
 
 - [IEG figures](https://github.com/PJordano-Lab/R-figures)
-
-
 
 
 
