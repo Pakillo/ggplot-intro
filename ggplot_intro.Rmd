@@ -702,6 +702,14 @@ myplot
 ```
 
 
+## esquisse: ggplot2 builder addin
+
+https://github.com/dreamRs/esquisse
+
+[![](images/esquisse_code.png)](https://raw.githubusercontent.com/dreamRs/esquisse/master/man/figures/esquisse.gif)
+
+
+
 
 ## Think twice before editing plots out of R
 
