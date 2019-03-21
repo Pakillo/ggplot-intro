@@ -2,11 +2,9 @@
 
 [Francisco Rodríguez-Sánchez](https://bit.ly/frod_san)
 
-See slides (PDF) [here](https://github.com/Pakillo/ggplot-intro/raw/master/ggplot_intro.pdf)
+Download slides (PDF) [here](https://github.com/Pakillo/ggplot-intro/raw/trees/ggplot_intro.pdf). See slides [here](https://github.com/Pakillo/ggplot-intro/blob/trees/ggplot_intro.pdf)
 
-See slides source code (Rmarkdown) [here](https://github.com/Pakillo/ggplot-intro/blob/master/ggplot_intro.Rmd)
-
-Link for datasets: http://tinyurl.com/treesdata
+See slides source code (Rmarkdown) [here](https://github.com/Pakillo/ggplot-intro/blob/trees/ggplot_intro.Rmd)
 
 
 ![](images/CC-BY-NC-SA_logo.png)

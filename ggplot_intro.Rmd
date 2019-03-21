@@ -214,7 +214,8 @@ include_graphics("images/so2.png")
 
 
 
-# Building a ggplot
+
+# Building a ggplot figure
 
 ## Our example dataset: tree heights and DBH
 
@@ -233,11 +234,12 @@ summary(trees[, 1:3])
 
 ## Data must be a tidy data frame
 
-```{r out.width="3in", out.height="3in"}
+```{r out.width="3.5in", out.height="3.5in"}
 include_graphics("images/tidy-1.png")
 ```
 
-```{r out.width="3in", out.height="3in"}
+
+```{r out.width="3.5in", out.height="3.5in"}
 include_graphics("images/tidy-9b.png")
 ```
 
@@ -431,15 +433,6 @@ ggplot(trees) +
 ```
 
 
-## Change colour scale
-
-```{r echo=TRUE, fig.width=5}
-ggplot(trees) +
-  aes(x = dbh, y = height) + 
-  geom_point(aes(colour = sex)) +
-  scale_colour_manual(values = c("blue", "orange"))
-```
-
 
 ## Change colour scale
 
@@ -447,7 +440,7 @@ ggplot(trees) +
 ggplot(trees) +
   aes(x = dbh, y = height) + 
   geom_point(aes(colour = sex)) +
-  scale_colour_brewer(type = "qual", palette = 6)
+  scale_colour_manual(values = c("orange", "blue"))
 ```
 
 
@@ -683,8 +676,9 @@ ggplot(trees) +
   labs(title = "Changing plot appearance") +
   theme(axis.title.x = element_text(colour = "blue"),
         axis.title.y = element_text(colour = "red"),
-        plot.title = element_text(size = 18),
-        legend.key = element_rect(fill = "white")
+        plot.title = element_text(size = 16),
+        legend.key = element_rect(fill = "white"),
+        legend.position = "bottom"
         )
 ```
 
