@@ -1,0 +1,23 @@
+---
+title: "plotly demo"
+author: "FRS"
+output: html_document
+---
+
+
+```{r}
+library(paperplanes)
+library(ggplot2)
+myplot <- ggplot(paperplanes) +
+  aes(x = age, y = distance) +
+  geom_point(aes(colour = gender), size = 4) +
+  labs(x = "Age (years)", y = "Distance (m)",
+       title = "my title")
+myplot
+```
+
+```{r}
+library(plotly)
+ggplotly(myplot)
+```
+
