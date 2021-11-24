@@ -1179,7 +1179,7 @@ https://cran.r-project.org/package=ggrepel
 
 ## Many extensions!
 
-https://www.ggplot2-exts.org/
+https://exts.ggplot2.tidyverse.org/gallery/
 
 ```{r}
 include_graphics("images/ggexts.PNG")
