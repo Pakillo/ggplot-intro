@@ -3,7 +3,7 @@ title: "Data visualisation with ggplot2"
 # subtitle: "A subtitle"
 author: "Francisco Rodríguez-Sánchez"
 institute: "https://frodriguezsanchez.net"
-date: "@frod_san"
+# date: "@frod_san"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -185,17 +185,6 @@ https://www.rstudio.com/resources/cheatsheets/
 
 
 
----
-
-## Find answers in Stack Overflow, Rstudio Community, R4DS...
-
-```{r out.width="40%"}
-include_graphics("images/so2.png")
-```
-
-
-
-
 
 ---
 class: middle, center
@@ -221,7 +210,7 @@ Using dplyr:
 
 ```{r echo=c(-1)}
 library(dplyr)
-paperplanes <- paperplanes %>% 
+paperplanes <- paperplanes |>  
   mutate(paper = as.factor(paper))
 ```
 
@@ -974,7 +963,7 @@ include_graphics("images/trevor_tweet.png")
 
 [Why I think twice before editing plots out of R](https://mbjoseph.github.io/posts/2018-12-27-why-i-think-twice-before-editing-plots-in-powerpoint-illustrator-inkscape-etc/)
 
-[Choosing the right visualization software](serialmentor.com/dataviz/choosing-the-right-visualization-software.html)
+[Choosing the right visualization software](https://clauswilke.com/dataviz/preface.html#thoughts-on-graphing-software-and-figure-preparation-pipelines)
 
 ---
 
